@@ -2,7 +2,6 @@ from presidio_anonymizer import AnonymizerEngine
 from presidio_anonymizer.entities import RecognizerResult, OperatorConfig
 
 def sample_run_anonymizer(text: str, start: int, end: int):
-    """Run Presidio anonymizer on given text/span and return the result."""
     engine = AnonymizerEngine()
     result = engine.anonymize(
         text=text,
