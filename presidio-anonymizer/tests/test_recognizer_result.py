@@ -284,6 +284,40 @@ def test_given_negative_start_or_endpoint_then_we_fail(start, end):
     ):
         create_recognizer_result("entity", 0, start, end)
 
+@pytest.mark.parametrize(
+
+    # Your test should use parametrize to list all the test cases for intersects
+    # Your test should use create_recognizer_result to create recognizers for testing
+
+    "a_start,a_end,b_start,b_end,expected",
+    [
+        (0, 4, 5, 9, 0), #no overlap
+        (0, 5, 5, 10, 0), #exact touch
+        (0, 7, 5, 10, 2), #partial
+        (5, 10, 0, 7, 2), #partial
+        (0, 10, 0, 10, 10), #full
+        (0, 10, 2, 5, 3), #complete
+        (2, 5, 0, 10, 3), #complete 
+        (0, 2, 1, 3, 1), #small
+        (0, 1, 1, 2, 0), #single touch
+    ],
+)
+def test_intersects(a_start, a_end, b_start, b_end, expected):
+    # checking if intersects returns the correct output
+    # 100% statement coverage for the intersects function
+    # 100% branch coverage for the intersects function
+    # Edge cases coverage, including:
+    # No overlap
+    # Full overlap
+    # Partial overlaps
+    # Complete containment
+    # Exact-touch boundaries (e.g., end==start)
+
+    r1 = create_recognizer_result("entity", 0, start=a_start, end=a_end)
+    r2 = create_recognizer_result("entity", 0, start=b_start, end=b_end)
+
+    assert r1.intersects(r2) == expected
+    assert r2.intersects(r1) == expected
 
 def create_recognizer_result(entity_type: str, score: float, start: int, end: int):
     data = {"entity_type": entity_type, "score": score, "start": start, "end": end}
